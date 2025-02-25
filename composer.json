@@ -3,17 +3,30 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.1",
+        "eborio/laravel-gettext": "^8.0",
+        "intervention/image": "^3.11",
+        "keboola/csv": "^4.1",
+        "lanin/laravel-api-debugger": "^4.0",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "php-open-source-saver/jwt-auth": "^2.8",
+        "phpoffice/phpspreadsheet": "^4.0",
+        "spatie/laravel-permission": "^6.15",
+        "kodeine/laravel-meta": "dev-l12-compatibility"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.5",
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
-        "laravel/pint": "^1.13",
+        "laravel/pint": "^1.21",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
@@ -67,5 +80,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-meta.git"
+        }
+    ]
 }
