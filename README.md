@@ -1,66 +1,194 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ES Laravel 12 Boilerplate
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The package uses Laravel 12 as its base.
+The system includes the following packages:
 
-## About Laravel
+- [Keboola PHP CSV](https://github.com/keboola/php-csv) (For reading and exporting CSV files)
+- [PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet) (For reading and exporting Excel files)
+- [DOMPDF Wrapper for Laravel](https://github.com/barryvdh/laravel-dompdf) (For generating PDFs)
+- [Laravel JSON API Debugger](https://packagist.org/packages/lanin/laravel-api-debugger) (For debugging JSON requests)
+- [Laravel Meta](https://github.com/kodeine/laravel-meta) (For generating meta tables for models)
+- [JWT Auth](https://github.com/PHP-Open-Source-Saver/jwt-auth) (For JWT authentication)
+- [Laravel Permission](https://spatie.be/docs/laravel-permission/v5/introduction) (For managing user permissions)
+- [IDE Helper Generator for Laravel](https://github.com/barryvdh/laravel-ide-helper) (For model autocomplete in IDEs)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Installation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Run Composer
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Run the following command to install the Composer dependencies.
 
-## Learning Laravel
+```bash
+composer install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## .env Configuration
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Copy the `.env.example` file to `.env`.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+cp .env.example .env
+```
 
-## Laravel Sponsors
+Once copied, generate the application key.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+php artisan key:generate
+```
 
-### Premium Partners
+Remember that every change to the .env file should be followed by a config:cache.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+php artisan config:cache
+```
 
-## Contributing
+## Database and Seeds
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Create the database and configure the .env file with the database credentials.
+Then run the migrations and seeds.
 
-## Code of Conduct
+```
+DB_DATABASE=DATABASE
+DB_USERNAME=USER
+DB_PASSWORD=PASSWORD
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan config:cache
+```
 
-## Security Vulnerabilities
+Migrate the database and install the seeds.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan migrate --seed
+```
 
-## License
+## JWT
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+To enable JWT, run the following command to generate the secret key.
+
+```bash
+php artisan jwt:secret
+```
+
+And verify that the following is generated in .env:
+
+```
+JWT_SECRET=XXXXXXXXXX
+JWT_ALGO=HS256
+```
+
+```bash
+php artisan config:cache
+```
+
+Remember that the auth.php configuration should use the JWT driver and the "api" guard.
+
+```php
+  'defaults' => [
+    'guard' => 'api',
+    'passwords' => 'users',
+  ],
+  'guards' => [
+    'web' => [
+      'driver' => 'session',
+      'provider' => 'users',
+    ],
+    'api' => [
+      'driver' => 'jwt',
+      'provider' => 'users',
+    ]
+  ],
+```
+
+## Files
+
+To link the public route http://XXXXXX/storage/ with the folder `/storage/app/public/`, run the following command:
+
+```bash
+php artisan storage:link
+```
+
+Run the following commands to create the folders where uploaded files will be stored:
+
+```bash
+mkdir -p storage/app/public/business/images
+mkdir storage/app/reports
+```
+
+To run the CSV example, run the following commands:
+
+```bash
+mkdir storage/app/examples
+cp resources/examples/* storage/app/examples
+```
+
+## Sample User System (Optional)
+
+The system uses the [Laravel Permission](https://spatie.be/docs/laravel-permission/v5/introduction) package to manage
+user roles and permissions.
+
+We create the roles:
+
+- superadmin. The Super Admin will manage users.
+- admin. Leave blank to allow adding features.
+
+Using the following command, create the permissions and assign them to the roles. We are using the _api_ guard for
+permissions.
+
+```bash
+php artisan app:user-examples-init
+```
+
+## Tests
+
+Copy the `.env` file to `.env.testing`.
+
+```bash
+cp .env .env.testing
+```
+
+And in `.env.testing` configure the test database:
+
+```
+DB_CONNECTION=sqlite
+DB_DATABASE=':memory:'
+```
+
+And remove all the configuration cache:
+
+```bash
+php artisan config:clear
+```
+
+To run the tests, execute the following command:
+
+```bash
+php artisan test
+```
+
+## Running the Project
+
+To run the project, execute the following command:
+
+```bash
+php artisan serve
+```
+
+## IDE Helper
+
+IDE Helper assists with model autocomplete.
+To generate it, run these commands:
+
+```bash
+php artisan ide-helper:generate
+```
+
+```bash
+php artisan ide-helper:models --write
+```
+
+# Documentation
+
+- [Laravel 12](https://laravel.com/docs/10.x/releases)
+- [Implementing JWT Auth with Laravel](https://blog.logrocket.com/implementing-jwt-authentication-laravel-9/)
