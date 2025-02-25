@@ -14,13 +14,14 @@
         "eborio/laravel-gettext": "^8.0",
         "intervention/image": "^3.11",
         "keboola/csv": "^4.1",
+        "kodeine/laravel-meta": "dev-l12-compatibility",
         "lanin/laravel-api-debugger": "^4.0",
         "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "php-open-source-saver/jwt-auth": "^2.8",
         "phpoffice/phpspreadsheet": "^4.0",
-        "spatie/laravel-permission": "^6.15",
-        "kodeine/laravel-meta": "dev-l12-compatibility"
+        "spatie/laravel-permission": "^6.15"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.5",
