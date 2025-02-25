@@ -1,0 +1,2 @@
+### Test GET api
+GET {{host}}/api/test
