@@ -1,0 +1,12 @@
+### Test Login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{user_email}}",
+  "password": "{{user_password}}"
+}
+
+### Test refresh token
+POST {{host}}/api/auth/refresh
+Authorization: Bearer {{token}}

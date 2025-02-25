@@ -15,5 +15,13 @@ class TestController extends Controller
         ]);
     }
 
+    public function testLoggedIn(): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'GET request successful'
+        ]);
+    }
+
 }
 
